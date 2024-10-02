@@ -1,4 +1,4 @@
-# 인사말 관련 모듈.
+# 인사말 관련 모듈. => 패키지가 없는 모듈.
 __version__ = 1.0
 
 def print_greeting(name):
@@ -21,12 +21,10 @@ class Hello:
     def eng_greet(self):
          return f"Hello {self.name}~!"
 
-print(__name__)
-if __name__ == "__main__": #main module일 때만 실행.
-    g = get_greeting("홍길동")
-    print(g)
-    print_welcome("유관순")
-
+if __name__ == "__main__":
+    
+    h = Hello("aaa")
+    print_greeting()
 
 
 
