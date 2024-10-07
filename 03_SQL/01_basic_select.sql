@@ -155,36 +155,75 @@ where  emp_name like '%!%%' escape '!';
 
 -- EMP 테이블에서 부서명(dept_name)이 null인 직원의 ID(emp_id), 
 --   이름(emp_name), 부서명(dept_name)을 조회.
-
-
+use hr;
+select emp_id, emp_name, dept_name
+from   emp
+where  dept_name is not null;
+-- where  dept_name is null;
+-- sql: null 모르는값, 없는 값.
+-- null인지 여부:  컬럼 is null, 컬럼 is not null
 
 -- EMP 테이블에서 업무(job)가 'IT_PROG'인 직원들의 모든 컬럼의 데이터를 조회. 
+select * from emp
+-- where  job = 'IT_PROG';
+where job <> 'IT_PROG';
 
+-- EMP 테이블에서 급여(salary)가 $10,000 이상인 직원의 ID(emp_id), 
+-- 이름(emp_name)과 급여(salary)를 조회
+select emp_id, emp_name, salary 
+from   emp
+where  salary >= 10000;
 
--- EMP 테이블에서 급여(salary)가 $10,000 이상인 직원의 ID(emp_id), 이름(emp_name)과 급여(salary)를 조회
+-- 급여(salary)가 $4,000에서 $8,000 사이에 포함된 직원들의 
+-- ID(emp_id), 이름(emp_name)과 급여(salary)를 조회
+select emp_id, emp_name, salary
+from   emp
+-- where  salary between 4000 and 8000;
+where salary not between 4000 and 8000; 
+-- 4000 보다 작거나 8000보다 큰 salary
 
-
--- 급여(salary)가 $4,000에서 $8,000 사이에 포함된 직원들의 ID(emp_id), 이름(emp_name)과 급여(salary)를 조회
-
-
--- EMP 테이블에서 2004년에 입사한 직원들의 ID(emp_id), 이름(emp_name), 입사일(hire_date)을 조회.
+-- EMP 테이블에서 2004년에 입사한 직원들의 ID(emp_id), 이름(emp_name),
+--    입사일(hire_date)을 조회.
 -- 참고: date/datatime에서 년도만 추출: year(컬럼명)
+select emp_id, emp_name, hire_date -- hire_date: date(날짜)
+from   emp
+where   year(hire_date) = 2004;-- ->year(date) 년도추출;
+-- where  hire_date between '2004-01-01' and '2004-12-31';
+  -- 2004년: 2004-01-01 ~ 2004-12-31
+-- select year(hire_date) from emp;
 
-
--- EMP 테이블에서 직원의 ID(emp_id)가 110, 120, 130 인 직원의  ID(emp_id), 이름(emp_name), 업무(job)을 조회
-
+-- EMP 테이블에서 직원의 ID(emp_id)가 110, 120, 130 인 
+-- 직원의  ID(emp_id), 이름(emp_name), 업무(job)을 조회
+select emp_id, emp_name, job
+from   emp
+where  emp_id in (110, 120, 130);
+-- where  emp_id not in (110, 120, 130); # 셋을 제외한 조회.
+-- where  emp_id = 110 or emp_id = 120 or emp_id= 130;
 
 -- EMP 테이블에서 'Sales' 와 'IT', 'Shipping' 부서(dept_name)가 아닌 직원들의 모든 정보를 조회.
+select * from emp
+where dept_name not in ('Sales', 'IT', 'Shipping');
 
+-- EMP 테이블에서 업무(job)가 'MAN'로 끝나는 직원의 ID(emp_id), 
+--    이름(emp_name), 업무(job)를 조회
+select emp_id, emp_name, job
+from   emp
+where  job like '%MAN'; 
+-- where  job like '%MAN%'; -- 포함하는지
+-- where  job like 'MAN%' ; --  끝나는 것. 
+-- where  job like '_MAN_'; -- 한글자MAN한글자
 
--- EMP 테이블에서 업무(job)가 'MAN'로 끝나는 직원의 ID(emp_id), 이름(emp_name), 업무(job)를 조회
-
-
--- EMP 테이블에서 커미션이 없는(comm_pct가 null인)  모든 직원의 ID(emp_id), 이름(emp_name), 급여(salary) 및 커미션비율(comm_pct)을 조회
-
+-- EMP 테이블에서 커미션이 없는(comm_pct가 null인)  
+-- 모든 직원의 ID(emp_id), 이름(emp_name), 급여(salary) 및 커미션비율(comm_pct)을 조회
+select emp_id, emp_name, salary, comm_pct
+from   emp
+-- where  comm_pct is null;
+where  comm_pct is not null;
 
 -- EMP 테이블에서 연봉(salary * 12) 이 200,000 이상인 직원들의 모든 정보를 조회.
-
+select * from emp
+where  salary*12 > 200000; 
+-- where절의 대상 컬럼에 연산자나 함수를 이용해 처리한 뒤 비교할 수있다.
 
 /* ******************************************
  WHERE 조건이 여러개인 경우 AND 나 OR 로 조건들을 묶어준다.
