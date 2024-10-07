@@ -239,25 +239,61 @@ where  salary*12 > 200000;
  or를 먼저 하려면 where 조건1 and (조건2 or 조건3)
  *******************************************/
  
--- EMP 테이블에서 'SA_REP' 업무를 담당하는 직원들 중 급여(salary)가 $9,000인 직원의 직원의 ID(emp_id), 이름(emp_name), 업무(job), 급여(salary)를 조회.
+-- EMP 테이블에서 'SA_REP' 업무를 담당하는 직원들 중 
+-- 급여(salary)가 $9,000인 직원의 직원의 ID(emp_id), 
+-- 이름(emp_name), 업무(job), 급여(salary)를 조회.
+select emp_id, job, salary
+from   emp
+where  job = 'SA_REP'
+and    salary >= 9000; 
 
+-- EMP 테이블에서 
+-- 업무(job)가 'FI_ACCOUNT' 거나 급여(salary)가 $8,000 이상인 
+-- 직원의 ID(emp_id), 이름(emp_name), 업무(job), 급여(salary)를 조회.
+select emp_id, emp_name, job, salary
+from   emp
+where  job = 'FI_ACCOUT'
+ or    salary >= 8000;
 
--- EMP 테이블에서 업무(job)가 'FI_ACCOUNT' 거나 급여(salary)가 $8,000 이상인 직원의 ID(emp_id), 이름(emp_name), 업무(job), 급여(salary)를 조회.
+-- EMP 테이블에서  'Sales' 부서 직원 중 업무(job)가 'SA_MAN' 이고 
+-- 급여가 $13,000 이하인 모든 정보를 조회
+select * from emp
+where dept_name = 'Sales'
+and   job = 'SA_MAN'
+and   salary >= 13000;
 
+-- EMP 테이블에서 업무(job)에 'MAN'이 들어가는 직원들 중에서 
+-- 부서(dept_name)가 'Shipping' 이고 2005년이후 입사한 
+-- 직원들의 ID(emp_id), 이름(emp_name), 업무(job), 
+-- 입사일(hire_date),부서(dept_name)를 조회
+select  emp_id, emp_name, job, hire_date, dept_name
+from    emp
+where   job like '%MAN%'
+and     dept_name = 'Shipping'
+and     year(hire_date) >= 2005;
 
--- EMP 테이블에서  'Sales' 부서 직원 중 업무(job)가 'SA_MAN' 이고 급여가 $13,000 이하인 모든 정보를 조회
+-- EMP 테이블에서 'Executive'나 'Shipping'  부서직원 중 
+-- 급여(salary)가 6000 이상인 직원들의 모든 정보 조회. 
+select * from emp
+where dept_name in ('Executive', 'Shipping') 
+and   salary >= 6000;
 
+-- EMP 테이블에서 업무(job)에 'MAN'이 들어가는 직원들 중에서 
+-- 'Marketing' 이나 'Sales' 부서에 소속된 
+-- 직원들의 ID(emp_id), 이름(emp_name), 업무(job), 부서(dept_name)를 조회
+select emp_id, emp_name, job, dept_name
+from   emp
+where  job like '%MAN%'
+and    dept_name in ('Marketing', 'Sales');
 
--- EMP 테이블에서 업무(job)에 'MAN'이 들어가는 직원들 중에서 부서(dept_name)가 'Shipping' 이고 2005년이후 입사한 
---           직원들의 ID(emp_id), 이름(emp_name), 업무(job), 입사일(hire_date),부서(dept_name)를 조회
-
-
--- EMP 테이블에서, 'Executive'나 'Shipping'  부서직원 중 급여(salary)가 6000 이상인 직원들의 모든 정보 조회. 
-
-
--- EMP 테이블에서 업무(job)에 'MAN'이 들어가는 직원들 중에서 'Marketing' 이나 'Sales' 부서에 소속된 직원들의 ID(emp_id), 이름(emp_name), 업무(job), 부서(dept_name)를 조회
-
-
+-- EMP 테이블에서 업무(job)에 'MAN'이 들어가는 직원들 중에서 
+-- salary가 10,000 이상이거나 2008년 이후 입사한 직원들 정보 조회.
+-- and , or 둘다 포함.
+select * from emp
+where  salary >= 10000 
+or  year(hire_date) >= 2008
+and job like '%MAN%';
+-- 괄호가 없는경우: 2008년도 이후 입사했고 job에 MAN이 들어가거나 또는 salary 가 10000이상. (and를 먼저 처리)
 
 /* *******************************************************************
 order by를 이용한 정렬
@@ -279,18 +315,38 @@ ex)
 order by salary asc, emp_id desc
 - salary로 전체 정렬을 하고 salary가 같은 행은 emp_id로 정렬.
 ******************************************************************* */
+select  컬럼선택
+from    테이블선택
+where   행선택
+order by 정렬;
 
---  직원들의 전체 정보를 직원 ID(emp_id)가 큰 순서대로 정렬해 조회
-
+-- 직원들의 전체 정보를 직원 ID(emp_id)가 큰 순서대로 정렬해 조회
+select * from emp
+order by emp_id desc;
 
 --  직원들의 id(emp_id), 이름(emp_name), 업무(job), 급여(salary)를 
---  업무(job) 순서대로 (A -> Z) 조회하고 업무(job)가 같은 직원들은 급여(salary)가 높은 순서대로 2차 정렬해서 조회.
-
+--  업무(job) 순서대로 (A -> Z) 조회하고 
+--  업무(job)가 같은 직원들은 급여(salary)가 높은 순서대로 2차 정렬해서 조회.
+select emp_id, emp_name, job, salary
+from   emp
+-- order by job asc, salary desc; -- 컬럼명으로 정렬기준 지정.
+order by 3, 4 desc; -- 컬럼명 대신 select절에 선언한 컬럼 순번(1 부터)으로 지정.
 
 -- 부서명을 부서명(dept_name)의 오름차순으로 정렬해 조회하시오.
+select dept_name from emp
+-- order by dept_name; -- 오름차순: null이 먼저 나온다.
+order by 1 desc; -- 내림차순: null은 맨 마지막에 나옴.
 
+-- 급여(salary)가 $5,000을 넘는 
+-- 직원의 ID(emp_id), 이름(emp_name),
+--  급여(salary)를 급여가 높은 순서부터 조회
+select emp_id, emp_name, salary
+from   emp
+where salary >= 5000
+order by salary desc;
 
--- 급여(salary)가 $5,000을 넘는 직원의 ID(emp_id), 이름(emp_name), 급여(salary)를 급여가 높은 순서부터 조회
+# select절 순서: select, from, where, group by, having, order by
+
 
 
 
