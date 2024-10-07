@@ -153,9 +153,8 @@ where  emp_name like '%!%%' escape '!';
  -- 부분일치 %, _ 조회할 때 사용하는 것이 아니라
  --  찾는 단어일 경우 %나 _앞에 escape문자를 붙인다.
 
-
-
--- EMP 테이블에서 부서명(dept_name)이 null인 직원의 ID(emp_id), 이름(emp_name), 부서명(dept_name)을 조회.
+-- EMP 테이블에서 부서명(dept_name)이 null인 직원의 ID(emp_id), 
+--   이름(emp_name), 부서명(dept_name)을 조회.
 
 
 
