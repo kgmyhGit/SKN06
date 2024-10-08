@@ -163,25 +163,53 @@ from   emp e left join dept d
 
 -- emp left join dept: emp의 모든행은 join 조건 상관없이 다 나온다.
 --                     dept는 join 조건이 True행만 나온다.
-
-select * from dept;
-
-
         
---  직원_id(emp.emp_id)가 100, 110, 120, 130, 140인 직원의 ID(emp.emp_id),이름(emp.emp_name), 업무명(job.job_title) 을 조회. 업무명이 없을 경우 '미배정' 으로 조회
+--  직원_id(emp.emp_id)가 100, 110, 120, 130, 140인 
+-- 직원의 ID(emp.emp_id),이름(emp.emp_name), 업무명(job.job_title) 
+-- 을 조회. 업무명이 없을 경우 '미배정' 으로 조회
+select e.emp_id, e.emp_name, 
+       ifnull(j.job_title, '미배정') as "job_title"
+from   emp e left join job j on e.job_id = j.job_id
+where  e.emp_id in (100, 110, 120, 130, 140);
+
+-- 부서 ID(dept.dept_id), 부서이름(dept.dept_name)과 
+-- 그 부서에 속한 직원들의 수를 조회. 
+-- 직원이 없는 부서는 0이 나오도록 조회하고 직원수가 많은 부서 순서로 조회.
+select d.dept_id,
+       d.dept_name,
+       count(e.emp_id) as "직원수"
+from   dept d left join emp e on d.dept_id = e.dept_id
+group by d.dept_id, d.dept_name;
+
+select * 
+from   dept d left join emp e on d.dept_id = e.dept_id;
 
 
-
--- 부서 ID(dept.dept_id), 부서이름(dept.dept_name)과 그 부서에 속한 직원들의 수를 조회. 직원이 없는 부서는 0이 나오도록 조회하고 직원수가 많은 부서 순서로 조회.
-
-
-
--- EMP 테이블에서 부서_ID(emp.dept_id)가 90 인 모든 직원들의 id(emp.emp_id), 이름(emp.emp_name), 상사이름(emp.emp_name), 입사일(emp.hire_date)을 조회. 
+-- EMP 테이블에서 부서_ID(emp.dept_id)가 90 인 모든 
+-- 직원들의 id(emp.emp_id), 이름(emp.emp_name), 
+-- 상사이름(emp.emp_name), 입사일(emp.hire_date)을 조회. 
 -- 입사일은 yyyy/mm/dd 형식으로 출력
+select e.emp_id, e.emp_name, 
+	   m.emp_name as "상사이름", 
+       date_format(e.hire_date, '%Y/%m/%d') as "hire_date"
+from   emp e left join emp m on e.mgr_id = m.emp_id
+where  e.dept_id = 90;
+-- e: 직원, m: 상사
 
-
--- 2003년~2005년 사이에 입사한 모든 직원의 id(emp.emp_id), 이름(emp.emp_name), 업무명(job.job_title), 급여(emp.salary), 입사일(emp.hire_date),
--- 상사이름(emp.emp_name), 상사의입사일(emp.hire_date), 소속부서이름(dept.dept_name), 부서위치(dept.loc)를 조회.
+-- 2003년~2005년 사이에 입사한 모든 직원의 id(emp.emp_id), 
+-- 이름(emp.emp_name), 업무명(job.job_title), 급여(emp.salary), 
+-- 입사일(emp.hire_date),
+-- 상사이름(emp.emp_name), 상사의입사일(emp.hire_date), 
+-- 소속부서이름(dept.dept_name), 부서위치(dept.loc)를 조회.
+select  e.emp_id, e.emp_name, j.job_title, e.salary, e.hire_date,
+		m.emp_name as "상사이름", m.hire_date as "상사 입사일",
+        d.dept_name, d.loc, s.grade
+from    emp e left join job j on e.job_id = j.job_id
+			  left join emp m on e.mgr_id = m.emp_id
+              left join dept d on e.dept_id = d.dept_id
+              left join salary_grade s 
+					on e.salary between s.low_sal and s.high_sal
+where   year(e.hire_date) between 2003 and 2005;
 
 
 
