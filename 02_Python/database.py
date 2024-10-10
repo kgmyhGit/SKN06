@@ -10,7 +10,7 @@ class HRDao:
         self.user = user
         self.password = password
         self.db=db
-        self.join_sql = """"""
+        
 
     def get_connection(self) -> pymysql.Connection:
         return pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.password, db=self.db)
