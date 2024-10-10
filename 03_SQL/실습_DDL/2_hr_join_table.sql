@@ -2,7 +2,7 @@
 USE  hr_join;
 
 
-set foreign_key_checks=1;
+set foreign_key_checks=0;
 
 -- ------------------------------------------------------
 -- DDL FOR DEPT
