@@ -1,8 +1,8 @@
 -- CREATE DATABASE hr_join;
-USE  hr_join;
+USE  hr;
 
 
-set foreign_key_checks=0; -- foreign key 설정을 무시하도록 설정.
+-- set foreign_key_checks=1;
 
 -- ------------------------------------------------------
 -- DDL FOR DEPT
@@ -77,7 +77,6 @@ INSERT INTO job (job_id,job_title,min_salary,max_salary) VALUES ('MK_MAN','Marke
 INSERT INTO job (job_id,job_title,min_salary,max_salary) VALUES ('MK_REP','Marketing Representative',4000,9000);
 INSERT INTO job (job_id,job_title,min_salary,max_salary) VALUES ('HR_REP','Human Resources Representative',4000,9000);
 INSERT INTO job (job_id,job_title,min_salary,max_salary) VALUES ('PR_REP','Public Relations Representative',4500,10500);
-
 
 
 -- ------------------------------------------------------
@@ -227,14 +226,3 @@ INSERT INTO salary_grade (grade,low_sal,high_sal) VALUES (4, 15001, 20000);
 INSERT INTO salary_grade (grade,low_sal,high_sal) VALUES (5, 20001, 99999);
 
 COMMIT;
-
-
-
-
-
-
-
-
-
-
-
