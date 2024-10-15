@@ -1,3 +1,6 @@
+## pip install streamlit
+## 실행: streamlit  run  파일.py
+
 from re import U
 import streamlit as st
 

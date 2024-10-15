@@ -23,5 +23,10 @@ v3 = st.sidebar.radio(
     captions=["2020", "2020", "2023"],
     index=None,  # 아무것도 선택되지 않도록 한다.
 )
+if v3 is not None:
+    st.write(f"선택한 지역: **{v3}**")
+else:
+    st.write("선택한 지역이 없습니다.")
 
-st.write(f"선택한 지역: **{v3}**")
+
+

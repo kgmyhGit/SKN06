@@ -24,7 +24,7 @@ st.subheader('st.dataframe()')
 st.dataframe(df)
 
 ## 가로 길이 조정.
-# st.dataframe(df, use_container_width=True) # use_container_width=False: 값의 크기에 맞춰 길이를 정한다. True: 전체 화면 길이
+st.dataframe(df, use_container_width=True) # use_container_width=False: 값의 크기에 맞춰 길이를 정한다. True: 전체 화면 길이
 # st.dataframe(df, width=640)
 
 # DataFrame 값 변경가능하게 출력
@@ -50,4 +50,4 @@ st.metric(
     value="10°C",           # 출력할 값
     delta="1.2°C"           # metric의 등락 크기값(옵션). `+` 로 시작하거나 생략하면 오름, `-` 로 시작하면 내림.
 )
-st.metric(label="삼성전자**", value="60,600원", delta="-700원 (-1.14%)")
+st.metric(label="**삼성전자**", value="60,600원", delta="-700원 (-1.14%)")
