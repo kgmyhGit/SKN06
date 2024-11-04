@@ -31,7 +31,7 @@ class AgeTransformer(BaseEstimator, TransformerMixin):
     
 # debtratio, monthlyincome 전처리에 적용할 transformer 클래스
 ## - 정상범위 최대값, 최소값으로 대체한다.
-## - debtratio: 2000, monthlyincome: 1.5 배의 IQR로 계산한 최대값, 최소값으로 대체한다.
+## - debtratio: 5000, monthlyincome: 1.5 배의 IQR로 계산한 최대값, 최소값으로 대체한다.
 
 class OutlierTransformer(BaseEstimator, TransformerMixin):
     def __init__(self, whis=1.5):
