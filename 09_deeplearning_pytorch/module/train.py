@@ -101,7 +101,9 @@ def train(dataloader, model, loss_fn, optimizer, device="cpu", mode:"binary or m
 
 
 
-def fit(train_loader, val_loader, model, loss_fn, optimizer, epochs, save_best_model=True, save_model_path=None, early_stopping=True, patience=10, device='cpu',  mode:"binary or multi"='binary'):
+def fit(train_loader, val_loader, model, loss_fn, optimizer, epochs, save_best_model=True, 
+        save_model_path=None, early_stopping=True, patience=10, device='cpu',  mode:"binary or multi"='binary',
+        lr_scheduler=None):
     """
     모델을 학습시키는 함수
 
@@ -118,6 +120,7 @@ def fit(train_loader, val_loader, model, loss_fn, optimizer, epochs, save_best_m
         patience (int, optional): 조기종료 True일 때 종료전에 성능이 개선될지 몇 epoch까지 기다릴지 epoch수. Defaults to 10.
         device (str, optional): device. Defaults to 'cpu'.
         mode(str, optinal): 분류 종류. "binary(default) or multi
+        lr_scheduler: Learning Rate Scheduler 객체. default: None, Epoch 단위로 LR 를 변경.
     [return]
         tuple: 에폭 별 성능 리스트. (train_loss_list, train_accuracy_list, validation_loss_list, validataion_accuracy_list)
     """
@@ -143,6 +146,14 @@ def fit(train_loader, val_loader, model, loss_fn, optimizer, epochs, save_best_m
     s = time.time()
     for epoch in range(epochs):
         train_loss, train_accuracy = train(train_loader, model, loss_fn, optimizer, device=device, mode=mode)
+        ############ 1 epoch 학습 종료 -> LR 를 변경 ###########
+        if lr_scheduler is not None:
+            current_lr = lr_scheduler.get_last_lr()[0]  # log용
+            lr_scheduler.step()
+            new_lr = lr_scheduler.get_last_lr()[0] # log용
+            if current_lr != new_lr: # LR가 변경되었으면
+                print(f">>>>>>Learning Rate가 {current_lr}에서 {new_lr}로 변경됨<<<<<<")
+
         
         if mode == "binary":
             val_loss, val_accuracy = test_binary_classification(val_loader, model, loss_fn, device=device)
