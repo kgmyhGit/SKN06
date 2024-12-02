@@ -60,35 +60,30 @@ chatbot_message_list = ["오늘 날씨가 어떤가요?",
 "건강에 좋은 간식으로는 어떤 게 있나요?",
 "스트레스를 푸는 좋은 방법이 있을까요?"]
 
-ai_message = chatbot_message_list[idx] # LLM 서비스에 요청 결과(가상으로 list이용)
+
 
 st.title("ChatBot 위젯 튜토리얼")
 
+## session_state 생성(dictionary 형식) -> 시작 ~ 종료 할때까지 사용자 별로 유지되는 값.
+###  "message_list":[{"role":"user", "message":"1.질문"}, {"role":"ai", "message":"1답변"}, {}, {}, ...]
+
+# session_state에 message_list 를 추가.
+if "message_list" not in st.session_state:
+    st.session_state["message_list"] = []  # 빈리스트 생성.  list[dict]
 
 ## 사용자 질문(prompt)를 입력받기 - chat_input()
 prompt = st.chat_input("User:") 
+if prompt:
+     # session_state의 message_list에 {"role":"user", "message":prompt} 추가
+    st.session_state["message_list"].append({"role":"user", "message":prompt})
+    ai_message = chatbot_message_list[idx] # LLM 서비스에 요청 결과(가상으로 list이용)
+    # # session_state의 message_list에 {"role":"ai", "message":ai_message} 추가
+    st.session_state["message_list"].append({"role":"ai", "message":ai_message})
 
-if prompt:# is not None:
-    #  질문(prompt)과 답변(ai_message) 를 chat container(채팅창)에 출력
-    # container = st.chat_message("user")  # container를 가져오기. role: "user" -> 입력자를 구분하기 위한 값.
-    # container.write(prompt)              # container에 글을 출력.
-    with st.chat_message("user"):
-        st.write(prompt) # with 문에서 생성한 container에 출력.
-    
-    # container = st.chat_message("ai")
-    # container.write(ai_message)
-    with st.chat_message("ai"):
-        st.write(ai_message)
-
-
-
-
-
-
-
-
-
-
+# 채팅창에 st.session_state["message_list"] 의 내용들을 모두 출력.
+for message_dict in st.session_state['message_list']:
+    with st.chat_message(message_dict["role"]):
+        st.write(message_dict['message'])
 
 
 
