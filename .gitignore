@@ -11,6 +11,7 @@ poppler-24.08.0/
 .env
 petitions_corpus.txt
 
+.cache_prompt.sqlite
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
