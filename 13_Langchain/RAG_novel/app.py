@@ -40,9 +40,6 @@ def get_retriever():
 
 retriever = get_retriever()
 
-
-
-
 ############################################################
 # Chain 생성
 ############################################################
@@ -61,7 +58,7 @@ def remove_same_novel_retriever(input):
             -------------
         ```
     """
-    docs = retriever.invoke(input)
+    docs = retriever.invoke(input) # list[Document-k:5]
     doc_list = []
 
     for retrieve_doc in docs:
@@ -87,6 +84,7 @@ def remove_same_novel_retriever(input):
 
 @st.cache_resource
 def get_resource():
+    # Chain생성
     human_message = dedent("""
         You are an assistant for question-answering tasks.
         Use the following pieces of retrieved context to answer the question. 
@@ -104,7 +102,10 @@ def get_resource():
     
     model = ChatOpenAI(model=MODEL_NAME, streaming=True)
 
-    chain = {"context":RunnableLambda(remove_same_novel_retriever), "question":RunnablePassthrough()} | prompt_template | model | StrOutputParser()
+    chain = ({"context":RunnableLambda(remove_same_novel_retriever), "question":RunnablePassthrough()} 
+             | prompt_template 
+             | model 
+             | StrOutputParser())
     
     return chain
 
