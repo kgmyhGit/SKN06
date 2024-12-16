@@ -6,6 +6,10 @@ from langchain_core.documents import Document
 from langchain_core.tools import tool
 from langchain_community.document_loaders import WikipediaLoader
 from langchain_core.runnables import RunnableLambda 
+from langchain_chroma import Chroma
+from langchain_openai import OpenAIEmbeddings
+
+
 from pydantic import BaseModel, Field
 from textwrap import dedent
 
@@ -74,3 +78,29 @@ search_wiki = wiki_runnable.as_tool(
         일반적인 지식이나 배경 정보가 필요한 경우 사용할 수있는 도구 입니다.
         """) # 생략: 함수의 docstring이 description이됨.
 )
+
+#################################
+# 식당 메뉴 조회 tool
+#################################
+COLLECTION_NAME = "restaurant_menu_2"
+PERSIST_DIRECTORY = "vector_store/restaurant_menu_db"
+# 연결
+embedding_model = OpenAIEmbeddings(model='text-embedding-3-small')
+v_store = Chroma(
+    embedding_function=embedding_model,
+    collection_name=COLLECTION_NAME,
+    persist_directory=PERSIST_DIRECTORY
+)
+retriver = v_store.as_retriever()
+
+@tool
+def search_menu(query:str) -> list[Document]:
+    """
+    Vector Store에 저장된 restaurant의 메뉴를 검색한다. 
+    이 도구는 restaurant의 메뉴 관련 질문에 대해 실행한다.
+    """
+    result = retriver.invoke(query)
+    if len(result): #검색결과가 있다면
+        return result
+    else:
+        return [Document(page_content="검색 결과가 없습니다.")]
