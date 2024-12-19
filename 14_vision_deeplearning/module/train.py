@@ -101,7 +101,8 @@ def train(dataloader, model, loss_fn, optimizer, device="cpu", mode:"binary or m
 
 
 
-def fit(train_loader, val_loader, model, loss_fn, optimizer, epochs, save_best_model=True, 
+def fit(train_loader, val_loader, model, loss_fn, optimizer, epochs, 
+        save_best_model=True, 
         save_model_path=None, early_stopping=True, patience=10, device='cpu',  mode:"binary or multi"='binary',
         lr_scheduler=None):
     """
