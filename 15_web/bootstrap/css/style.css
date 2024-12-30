@@ -1,0 +1,19 @@
+/* css/style.css */
+/*이 문서 전체에 적용할 css 설정.*/
+h2 {
+    background-color:aqua;/*배경색*/
+    border-style:dashed;        
+}
+.border { /*.border -> 모든 태그에서 class=border 인 것들들*/
+    border:1px solid gray;
+}
+.margin { /*class=margin, margin설정: 외과 여백*/
+    /*margin: 10px;*/
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px
+}
+.padding { /*padding설정: 안쪽 여백*/
+    padding: 10px;
+}
