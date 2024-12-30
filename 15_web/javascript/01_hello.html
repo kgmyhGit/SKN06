@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    안녕하세요.
+    <script>
+        // let name = prompt("이름입력:");
+        // document.write(name+"님<br>");
+        let name = "홍길동"; 
+        // name = "이순신"
+        let age = 20;
+        document.write("이름:"+name+"<br>나이:"+age); 
+        let info = `<br>이름:${name}<br>나이:${age}<br>`
+        document.write(info)
+        // 문자열 + 다른타입 : 다른타입을 문자열로 변환 후 합침.
+        console.log(typeof age) //console.log(값): 콘솔(터미널)에 값을 출력
+        console.log(typeof name)
+
+    </script>
+    반갑습니다.
+    <script src="scripts.js"></script> <!--scripts.js 파일을 이 위치에서 실행시킨다.-->
+    두번째<br>
+    <script src="scripts.js"></script>    
+ 
+</body>
+</html>
