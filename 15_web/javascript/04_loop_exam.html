@@ -11,21 +11,26 @@
             // 반복문 : while, for , do while, for in
 
             function whileExam(num) {
-                list = [];
+                list = []; //빈 배열
                 while (num < 10) {
-                    list.push(num);
-                    num++;
+                    list.push(num); // 배열에 값을 추가.
+                    num++; // 증감식 -> 조건에서 사용하는 값을 변경.
                 }
                 alert(list);
             }
+            // whileExam(1);
 
             function forExam() {
                 list = [];
-                for (num = 1; num < 10; num++) {
+                // 초기식: for문 시작시 한번 실행.
+                // 조건식: 반복 전에 조건체크
+                // 증감식: 반복이 끝나면 실행.
+                for (let num = 1; num < 10; num++) {
                     list.push(num);
                 }
                 alert(list);
             }
+            // forExam()
 
             function doWhileExam() {
                 list = [];
@@ -40,25 +45,31 @@
                 } while (true);
                 alert(list);
             }
+            
+            // doWhileExam()
 
             function forInExam() {
                 list = ["a", "b", "c", "d", "e"];
+                // 배열 index: 0 부터 시작.
 
-                for (idx in list) {
+                for (idx in list) {  // index를 반환.
                     console.log(idx + "," + list[idx]);
                 }
             }
+            // forInExam()
 
             function forInExam2() {
                 info = {
                     name: "홍길동",
                     age: 20,
                 };
-                console.log(info.age);
+                // 객체의 속성(propery)조회- .표기법, index.
+                console.log(info.age, info["age"]); 
                 for (key in info) {
                     console.log(key + "," + info[key]);
                 }
             }
+            forInExam2()
         </script>
     </body>
 </html>

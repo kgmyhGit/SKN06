@@ -11,7 +11,7 @@
         <script>
             function ifExam() {
                 str = prompt("숫자를 입력하세요");
-                num = parseInt(str);
+                num = parseInt(str); // (정수형태)문자열을 정수로 변환. "20"->20
 
                 if (num > 0) {
                     alert(num + ": 양수");
@@ -22,8 +22,12 @@
                 }
             }
 
+            // ifExam()
+
+
             function ifExam2() {
                 b = confirm("삭제하겠습니까?");
+                //버튼: 확인-true, 취소-false 리턴.
 
                 if (b) {
                     alert("삭제 처리");
@@ -31,18 +35,16 @@
                     alert("삭제 취소");
                 }
             }
+            // ifExam2()
 
             function switchExam() {
                 month = parseInt(prompt("월을 입력하세요"));
 
+                // if (month===1 || month ===3 || month===5, ....){
+                //     alert(month + "월은 31일까지 입니다.");
+                // }
                 switch (month) {
-                    case 1:
-                    case 3:
-                    case 5:
-                    case 7:
-                    case 8:
-                    case 10:
-                    case 12:
+                    case 1: case 3: case 5: case 7: case 8: case 10: case 12:
                         alert(month + "월은 31일까지 입니다.");
                         break;
                     case 4:
@@ -58,6 +60,7 @@
                         alert(month + "는 잘못된 값입니다.");
                 }
             }
+            // switchExam()
         </script>
     </body>
 </html>

@@ -66,8 +66,8 @@
             function worker(func) {
                 num1 = 10;
                 num2 = 20;
-                result = func(num1, num2);
-                console.log("계산결과: " + result);
+                let result = func(num1, num2);
+                console.log("계산결과: ", result);
             }
 
             function sum(n1, n2) {
@@ -75,17 +75,25 @@
             }
 
             // worker(sum)
-            worker(function(n1, n2){return n1 - n2})
-
+            // worker(function(n1, n2){return n1 - n2})
+            worker((n1, n2) => n1 * n2);
 
 
             //8. 화살표 함수
             let arrowFunc1 = (num1, num2) => num1 + num2;
 
+            let result = arrowFunc1(10, 20)
+            console.log(result)
+
             let arrowFunc2 = (num1, num2) => {
                 result = num1 - num2;
                 console.log(result);
+                return result
             };
+            result2 = arrowFunc2(100, 200);
+            console.log("arrowFunc2", result2)
+
+
         </script>
     </body>
 </html>
