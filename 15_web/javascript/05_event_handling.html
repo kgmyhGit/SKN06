@@ -30,7 +30,7 @@
         >
             이름: <input type="text" name="name" id="name" /><br />
             나이: <input type="text" name="age" id="age" /><br />
-            <input type="button" value="등록 번튼" onclick="checkForm()" />
+            <input type="button" value="등록 버튼" onclick="checkForm()" />
             <input type="submit" value="등록 폼 Submit 버튼" />
         </form>
 
@@ -77,12 +77,12 @@
                 name = nameTF.value;
                 age = ageTF.value;
 
-                if (!name) {
+                if (!name) { // 이름 입력이 안되었으면.
                     alert("이름을 입력하세요");
                     nameTF.focus();
                     return false;
                 } else {
-                    if (name.length > 5) {
+                    if (name.length > 5) { // 문자열.length -글자수수
                         alert("이름은 5글자까지 가능합니다.");
                         nameTF.value = "";
                         nameTF.focus();
@@ -94,6 +94,7 @@
                     ageTF.focus();
                     return false;
                 } else {
+                    //문자열->정수 (정수형태가 아니면 NaN(false)을 반환.)
                     ageNum = parseInt(age);
                     if (!ageNum) {
                         alert("나이는 숫자만 가능합니다.");
@@ -103,8 +104,9 @@
                     }
                 }
             }
-            function check(text_input) {
-                alert(text_input.value);
+            function check(text_input) { // this: event source
+                // text_input: 입력 폼객체, text_input.value: 입력된 문자열
+                alert(text_input.value); 
                 text_input.value = "";
             }
 
