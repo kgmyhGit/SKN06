@@ -18,12 +18,37 @@
                     alert(place + "에 간다.");
                 },
                 getInfo: function () {
+                    // 메소드에서 다른 property를 호출 => this.propertyName
+                    // this: 이 객체(메소드를 가진 객체)
+                    // let name = "이순신";
+                    // name
                     info = `이름: ${this.name}, 나이: ${this.age}`;
                     return info;
                 },
             };
-
             
+            console.log(person.name, person['name'])
+            console.log(person['job name'])
+            // person.go("서울")
+            p_info = person.getInfo()
+            console.log(p_info)
+            console.log(person.isMarriage?"기혼":"미혼")
+            // 값 변경
+            person['job name'] = "사업"
+            console.log(person['job name'])
+            // for in
+            for (let key in person){
+                console.log(key); // property name 조회
+            }
+            console.log("구조분해할당")
+            let arr = [1, 2, 3, 4, 5]
+            // let [v1, v2, v3, v4, v5] = arr
+            let [v1, v2, v3, v4, v5, v6=0] = arr //v6의 기본값이 없으면 undefined
+            console.log(v1, v2, v3, v4, v5, v6)
+            let {name, age} = person
+            console.log(name, age)
+            let {name:p_name, age:p_age} = person
+            console.log(p_name, p_age)
         </script>
     </body>
 </html>

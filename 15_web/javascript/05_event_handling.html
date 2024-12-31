@@ -21,9 +21,8 @@
         ></div>
 
         <input type="text" name="txt" onblur="check(this)" />
-
         <form
-            action="/test"
+            action="/test" 
             method="post"
             id="form"
             onsubmit="return checkForm2()"
@@ -67,8 +66,9 @@
                     }
                 }
 
-                form = document.getElementById("form");
-                form.submit();
+                form = document.getElementById("form"); //Form 객체<form>
+                form.submit(); // form을 submit 하는 메소드 호출(submit 버튼 클릭)
+                //form.reset(); // reset버튼 클릭처리.
             }
 
             function checkForm2() {

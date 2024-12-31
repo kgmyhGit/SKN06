@@ -26,8 +26,10 @@
 
         <script>
             function showAddress(zipcode, address) {
-
-
+                // opener : 팝업 윈도우에서 자신을 띄운 window 를 참조하는 객체
+                opener.document.f1.zipcode.value = zipcode;
+                opener.document.f1.address.value = address;
+                window.close();
             }
         </script>
     </body>

@@ -20,11 +20,18 @@
         </div>
         <script>
             function windowExam() {
-                
+                let v = window.parseInt("10");
+                v = parseFloat("30.27")
+                console.log(v+20)
+                console.log(isNaN("가나다"), isNaN("3000"))
             }
 
             function popupAddress() {
-
+                // 새창 띄우기(open - window.open())
+                // 파라미터 1: 새창에 띄울 페이지의 url
+                // 2. 창이름. 같은 이름의 창이 이미 있으면 그 창에, 없으면 새로 띄운다.
+                // 3. 창 설정.
+                window.open("09_popup.html", "address_popup", "width=500,height=400");
             }
         </script>
     </body>

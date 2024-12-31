@@ -27,16 +27,17 @@
                 console.log(arr);
                 console.log("배열 크기 : " + arr.length);
 
-                /*
+                
                 let v1 = arr.pop();
                 let v2 = arr.shift();
                 console.log(v1, v2);
                 console.log(arr);
-
+                
+                // index 1에서부터 2개를 삭제
                 let v3 = arr.splice(1, 2);
                 console.log(`splice(2,3): ${v3}`);
                 console.log(arr);
-
+                
                 arr.push("마지막값");
                 console.log(arr);
                 arr.unshift("첫번째 값");
@@ -44,12 +45,12 @@
 
                 arr.splice(2, 0, "삽입할 값", 1, 2, 3, 4, 5); //중간 삽입
                 console.log(arr);
-                */
+                
             }
             function arrayExam2() {
                 let arr = ["a", "b", "c", "d", "e"];
                 console.log(arr[0], arr[2]);
-                /*
+                
                 arr[1] = "가";
                 console.log(arr);
                 arr[7] = "나";
@@ -64,14 +65,17 @@
                 for (i in arr) {
                     console.log(i, arr[i]);
                 }
-                */
+                
             }
 
             function dateExam() {
+                // 실행시점의 일시.
                 let today = new Date();
-                console.log(today);
-                // let str = dateToString(today);
-                // console.log(str);
+                // console.log(today);
+                let str = dateToString(today);
+                console.log(str); 
+                // month - 0월 ~ 11월
+                // 조회: 조회월+1, 값지정: 지정할월-1
                 // console.log(new Date(2010,5,7))
                 // console.log(new Date(0,0,0,10,10))
             }
