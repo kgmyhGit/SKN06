@@ -15,8 +15,8 @@
                 취미를 선택하세요 (1개 이상선택)
                 <div>
                     <!-- bootstrap checkbox/radio - class="form-check-input"  라벨 클래스는 form-check-label-->
-                    <input type="checkbox" name="hobby" value="독서" class="form-check-input"/>
-                    <label>독서</label>
+                    <input type="checkbox" name="hobby" id="reading" value="독서" class="form-check-input"/>
+                    <label for="reading">독서</label>
                 </div>
                 <div>
                     <input type="checkbox" name="hobby" value="음악" class="form-check-input" />
@@ -35,8 +35,8 @@
                     <label>영화</label>
                 </div>
                 <div>
-                    <input type="checkbox" name="allCheck" onclick="checkAll()" class="form-check-input" />
-                    <label>모두선택/해제</label>
+                    <input type="checkbox" name="allCheck" id="all" onclick="checkAll()" class="form-check-input" />
+                    <label for="all">모두선택/해제</label>
                 </div>
 
                 <p>
@@ -47,12 +47,35 @@
 
         <script>
             function checkHobby() {
+                //name=hobby인 태그가 여러개 -> 배열에 담아서 반환. => Node List
+                hobbyList = document.f1.hobby;
+                // console.log(hobbyList);
+                // checkbox, radio 이 체크되었는지 여부 확인. checked property값을 조회.
+                let cnt = 0; // 몇개 체크 되었는지 저장할 변수
+                for (let idx in hobbyList) {
+                    // console.log(hobbyList[idx].checked)
+                    
+                    if (hobbyList[idx].checked) {
+                        cnt++;  // cnt = cnt + 1
+                    }
+                }
+                if (cnt === 0) {
+                    alert("취미는 한개 이상 선택하세요.");
+                    return;
+                }
+                alert("전송-form.submit()");
                 
-
             }
 
             function checkAll() {
-                
+                // allCheck의 체크 상태 조회
+                let flag = document.f1.allCheck.checked;
+                // console.log(flag);
+                hobbyList = document.f1.hobby;
+                for (let idx in hobbyList) {
+                    hobbyList[idx].checked = flag;
+                    // hobby 체크박스의 checked 속성을 allCheck의 값으로 변경.
+                }
                 
             }
         </script>

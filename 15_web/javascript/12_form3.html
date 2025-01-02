@@ -12,6 +12,7 @@
         <div class="container mt-2">
             <form name="f1" action="/add" onsubmit="return checkSel()">
                 <input type="submit" value="전송" class="btn btn-primary mb-2"/><br />
+                <!-- change event - 선택된 값이 바뀔때 발생. -->
                 <select name="phone" onchange="get_item()" class="form-select">
                     <option value="default">번호선택</option>
                     <option>010</option>
@@ -20,13 +21,41 @@
                     <option>019</option>
                 </select>
             </form>
+            <!-- 
+                <option value="요청파라미터의 값">보여지는 값-text</option> 
+                value를 생략하면 "보여지는값-text" 이 value가 된다.
+            -->
         </div>
         <script>
             function get_item() {
+                // <select name='phone'> 조회
+                let sel = document.f1.phone;
+                // 선택된 option의 index를 조회
+                let selIndex = sel.selectedIndex;
+                console.log("선택된 index:", selIndex);
                 
+                // select객체.options - <option> 객체들을 배열에 담아서 반환.
+                let optionList = sel.options;
+                // console.log(optionList);
+                for (let idx in optionList) {
+                    // <option value="option.value">option.text</option>
+                    console.log(optionList[idx].value, optionList[idx].text)
+                }
+                // 선택된 값을 조회
+                let selValue = sel.options[selIndex].value
+                console.log("선택된 option의 value:", selValue);
+
+
+
+                // document.f1.submit();
             }
 
             function checkSel() {
+                // 번호선택 이 선택된 상태에서 전송하면 전송이 안되도록 처리.
+                if (document.f1.phone.selectedIndex === 0) {
+                    alert("번호를 선택하세요");
+                    return false;
+                }
                 
             }
         </script>
