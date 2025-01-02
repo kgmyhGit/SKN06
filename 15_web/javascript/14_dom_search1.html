@@ -8,6 +8,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </head>
     <body>
+        
         <div class="container mt-3">
             name=name<br />
             <input type="text" name="name" /><br />
@@ -36,10 +37,13 @@
             <input type="button" class="btn btn-primary" value="searchByTagName('textarea')호출" onclick="searchByTagName('textarea')" />
             <input type="button" class="btn btn-primary" value="searchByTagName('input')호출" onclick="searchByTagName('input')" />
             <input type="button" class="btn btn-primary" value="searchByClassName('pink_color')호출" onclick="searchByClassName('pink_color')" />
+            <br><br><br><br><br><br><br><br><br>
         </div>
         <script type="text/javascript">
             function searchByName() {
-                
+                // name 속성의 값으로 조회
+                let nodeList = document.getElementsByName("name");
+                console.log(nodeList);
                 
             }
             function searchById() {
