@@ -29,12 +29,41 @@ XMLHttpRequest 객체
         <title>Document</title>
     </head>
     <body>
-        <button id="btn">요청</button>
-        <br /><span id="res"></span>
+        <button id="btn" onclick="ajaxRequest()">요청</button>
+        <br />
+        <div id="res"></div>
 
         <script>
             function ajaxRequest() {
+                const xhr = new XMLHttpRequest(); // 객체 생성.
+            
+                //callback 함수를 등록. http요청 ~ http응답 각 단계마다 호출 되는 함수를 등록.
+                // onload - 요청한 서버로부터 응답이 왔을 때 호출되는 callback.
+                xhr.onload = function() {
+                    // this: xhr객체, xhr객체.status : http 응답 코드(200:정상응답)
+                    if (this.status == 200) {
+                        // console.log(this.responseText);//xhr.responseText: 응답결과
+                    
+                        //JSON 응답(string) -> Javascript 객체로 변환
+                        let jsonResult = JSON.parse(this.responseText);
+                        let origin = jsonResult['origin'];
+                        let url = jsonResult["url"];
+                        let result = `<b>Origin:</b> ${origin}<br>
+                                    <b>URL:</b> ${url}`;
+                                
+                        let div = document.getElementById("res");
+                        div.innerHTML = result;
+                    }
+
+                }
+                // 요청  관련 정보들을 xhr에 등록 
+                // open(요청방식, 요청url, 비동기여부:true-비동기, false: 동기)
+                // 동기 - 응답이 올때까지 다른 작업을 못한다.
+                // 비동기 - 응답이 오기 전에도 다른 작업을 할 수있다.
+                xhr.open("GET", "https://httpbin.org/get", true);
                 
+                // http 요청
+                xhr.send()
             }
         </script>
     </body>
