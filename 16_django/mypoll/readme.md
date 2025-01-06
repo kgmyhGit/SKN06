@@ -1,17 +1,17 @@
 1. 프로젝트 생성
 mkdir   mypoll  - project 디렉토리
 cd  mypoll
-- project 생성:   django-admin  startproject  config  .
+- project 생성:   `django-admin  startproject  config  .`
    config: 설정파일들을 저장하는 디렉토리.
 
 - django-admin   startproject  test_project
    - test_project 라는 프로젝트를 직접 생성.
 
 - 개발서버 실행.
-   -  mypoll >  python  manage.py  runserver
+   -  mypoll >  `python  manage.py  runserver`
 
 2. App 생성
-   1. mypoll> python  manage.py  startapp  polls
+   1. mypoll> `python  manage.py  startapp  polls`
             - polls: app이름
    2. 생성한 app을 프로젝트에 등록
         - config/settings.py
@@ -35,7 +35,7 @@ cd  mypoll
 4. Model 정의
    1. Model 클래스 정의 (polls/models.py)
    2. admin.py에 모델클래스 등록
-   3. python manage.py makemigrations
+   3. python manage.py makemigrations  app이름름
         - DB에 테이블을 생성/수정할 코드를 생성.
    4. python manage.py  migrate
         - DB에 테이블을 생성/수정 한다.

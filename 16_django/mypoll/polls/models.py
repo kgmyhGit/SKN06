@@ -16,7 +16,7 @@ class Question(models.Model):
     question_text = models.CharField(max_length=200) # 문자열 타입. varchar(200)
     pub_date = models.DateTimeField(auto_now_add=True)   # 날짜/시간 타입
     # auto_add_now=True -> insert할 때 날짜/시간을 입력.
-
+    
     def __str__(self):
         return f"{self.id}. {self.question_text}"
 
