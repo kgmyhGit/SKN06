@@ -22,6 +22,7 @@ class Question(models.Model):
 
 
 #  보기(Choice) 모델 - DB의 CHOICE 테이블과 연결
+
 class Choice(models.Model):
 
     choice_text = models.CharField(max_length=200) # 보기문장
@@ -29,7 +30,8 @@ class Choice(models.Model):
     # Foreign key - QUESTION.id(PK) 참조
     question =  models.ForeignKey(
         Question, # 참조할 model클래스
-        on_delete=models.CASCADE  # 부모테이블의 참조값이 삭제된 경우 어떻게 할지.
+        on_delete=models.CASCADE,  # 부모테이블의 참조값이 삭제된 경우 어떻게 할지.\
+        # related_name="my_choice_set"        
     )
     
     def __str__(self):
