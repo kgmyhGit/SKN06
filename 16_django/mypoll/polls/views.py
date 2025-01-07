@@ -97,13 +97,16 @@ def vote(request):
         choice.votes += 1
         choice.save()
 
-        q = Question.objects.get(pk=question_id)
-
+        # q = Question.objects.get(pk=question_id)
+        # return render(
+        #     request, "polls/vote_result.html", {"question":q}
+        # )
 
         # 투표결과 페이지로 이동 -> view를 호출
-        # return redirect(f"/polls/view_result/{question_id}")
-        # redirect(url): Redirect 방식 응답. Web Browser가 지정한 url로 
-        # 다시 요청하도록 응답. 
+        url = f"/polls/vote_result/{question_id}"
+        return redirect(url)
+        # redirect(url): Redirect 방식 응답. 
+        # Web Browser가 지정한 url로  다시 요청하도록 응답. 
 
     else: # choice요청파라미터가 없는 경우.
         question = Question.objects.get(pk=question_id)
@@ -113,3 +116,30 @@ def vote(request):
             {"question":question, "error_msg":"보기를 선택하세요."}
             
         )
+
+
+# 투표결과를 응답하는 View
+# 요청 url: poll/vote_result/question_id
+# view : vote_result
+# 응답: polls/vote_result.html
+
+def vote_result(request, question_id):
+    question = Question.objects.get(pk=question_id)
+    return render(request, 'polls/vote_result.html', {"question":question})
+
+
+# 설문 등록 처리 View
+# 요청 url: /polls/vote_create
+# view: vote_create
+##     - GET요청: 문제-보기 등록 폼 페이지를 응답
+##     - POST요청: 등록 처리.
+# 응답 - GET: polls/vote_create.html
+#        POST: list view 를 호출 => redirect() 이동(새로고침 해도 추가 되지 않게.)
+## HTTP 요청방식을 조회 - request.method: "POST", "GET"
+def vote_create(request):
+    http_method = request.method
+    if http_method == "GET":
+        return render(request, "polls/vote_create.html")
+
+    elif http_method == "POST":
+        pass

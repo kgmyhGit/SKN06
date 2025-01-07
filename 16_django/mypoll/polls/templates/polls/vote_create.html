@@ -1,0 +1,30 @@
+<!-- polls/templates/polls/vote_create.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>설문 문제 등록</title>
+</head>
+<body>
+<a href="/polls/list">설문목록</a> 
+<hr>
+
+<h1>설문 문제 등록</h1>
+<!-- action생략: 현재 url로 요청. -->
+<form method="post">
+    {% csrf_token %}
+    <h2>질문</h2>
+    <input type="text" name="question_text" required>
+    <h2>보기</h2>
+    <div layer="choice_layer">
+        <input type="text" name="choice_text" required>
+    </div>
+    <div>
+        <button type="button">보기 추가</button>
+        <button type="button">보기 제거</button>
+        <button type="submit">문제 등록</button>
+    </div>
+</form>
+</body>
+</html>
