@@ -1,9 +1,9 @@
 # polls/views.py
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from datetime import datetime
 
-from polls.models import Question
+from polls.models import Question, Choice
 
 # welcome page
 # View 함수 -> 1개 이상 파라미터선언(HttpRequest객체를 받는 파라미터)
@@ -51,3 +51,65 @@ def list(request):
         "polls/list.html",
         {"question_list":question_list}
     )
+
+# 설문폼 페이지로 이동하는 View
+## 설문 문항(문제)의 id(pk)를 받아서 설문폼을 응답.
+## 문제 ID를 path parameter로 입력받는다.
+##    http://url:port/vote_form?pk=3 => 요청파라미터(QueryString)
+##    http://url:port/polls/vote_form/문제번호 => 패스 파라미터
+# 요청URL: /polls/voteform
+# view: vote_form
+# 응답 template: polls/vote_form.html
+def vote_form(request, question_id):
+    # question_id: path parameter로 문제 id값을 받을 변수
+    #  -> urls.py에 path 설정시 지정.
+
+    # 1. question_id로 Question 조회
+    question = Question.objects.get(pk=question_id)
+
+    # 2. 조회결과로 응답 페이지를 생성
+    return render(
+        request, "polls/vote_form.html", {"question":question}
+    )
+    # print("없는 문제를 조회했습니다. -> error 응답페이지로 이동.")
+
+
+# 투표 처리
+## 요청URL: /polls/vote
+## view : vote
+## 응답: - 정상 처리: vote_result view를 호출 (redirect방식)
+##       - 요청파라미터 검증 실패(선택안하고 투표) -> polls/vote_form.html 
+
+# View 에서 요청파라미터 조회
+## GET 요청: request.GET['요청파라미터이름'], request.GET.get("요청파라미터이름")
+## POST 요청: request.POST['요청파라미터이름'], request.POST.get("요청파라미터이름")
+# []: 요청파라미터이름으로 넘어온게 없으면 Exception 발생
+# get: 요청파라미터이름으로 넘어온게 없으면 None 반환.
+
+def vote(request):
+    # post 요청파라미터 - name: choice
+    choice_id = request.POST.get("choice")
+    question_id = request.POST.get("question_id")
+
+    if choice_id is not None:
+        # 보기의 votes를 1 증가하도록 update
+        choice = Choice.objects.get(pk=choice_id)
+        choice.votes += 1
+        choice.save()
+
+        q = Question.objects.get(pk=question_id)
+
+
+        # 투표결과 페이지로 이동 -> view를 호출
+        # return redirect(f"/polls/view_result/{question_id}")
+        # redirect(url): Redirect 방식 응답. Web Browser가 지정한 url로 
+        # 다시 요청하도록 응답. 
+
+    else: # choice요청파라미터가 없는 경우.
+        question = Question.objects.get(pk=question_id)
+        return render(
+            request, 
+            "polls/vote_form.html",
+            {"question":question, "error_msg":"보기를 선택하세요."}
+            
+        )
