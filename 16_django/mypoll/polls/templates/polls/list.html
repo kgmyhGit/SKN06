@@ -1,25 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-<a href="/polls/vote_create">설문등록</a>
-<hr>
+<!-- templates/polls/list.html -->
+{% extends "layout.html" %}
 
-<h1>설문 목록</h1>
-
-<ul>
-{% for question in question_list %}
-    <li>
-        <a href="/polls/vote_form/{{question.pk}}">
-            {{question.pk}}. {{question.question_text}}
-        </a>
-    </li> <!--질문번호. 질문-->
-{% endfor%}
-</ul>
-
-</body>
-</html>
+{% block title %}설문목록{% endblock %}
+{# layerout.html 의 title 블록에 설문 목록을 넣어라. #}
+{% block contents %}
+    <h1>설문 목록</h1>
+    <ul>
+    {% for question in question_list %}
+        <li>
+            <a href="/polls/vote_form/{{question.pk}}">
+                {{question.pk}}. {{question.question_text|truncatewords:4}}
+                - {{question.pub_date | date:'Y/m/d H:i:s'}}
+            </a>
+        </li> <!--질문번호. 질문-->
+    {% endfor%}
+    </ul>
+{% endblock %}

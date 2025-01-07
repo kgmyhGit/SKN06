@@ -12,7 +12,7 @@ urlpatterns = [
     path("vote_result/<int:question_id>", views.vote_result, name="vote_result"),
     path('vote_create', views.vote_create, name="vote_create"),
 ]
-
+# http://127.0.0.1:8000/polls/list
 
 # http://127.0.0.1:8000/polls/vote_form/3
 # path parameter 변수 설정. <타입:변수이름>

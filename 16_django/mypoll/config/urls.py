@@ -23,3 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('polls/', include("polls.urls")),
 ]
+
+# http://ip;8000/polls/list
