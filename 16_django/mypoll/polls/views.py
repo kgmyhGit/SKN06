@@ -138,8 +138,23 @@ def vote_result(request, question_id):
 ## HTTP 요청방식을 조회 - request.method: "POST", "GET"
 def vote_create(request):
     http_method = request.method
-    if http_method == "GET":
+    if http_method == "GET": # 등록폼을 반환
         return render(request, "polls/vote_create.html")
 
-    elif http_method == "POST":
-        pass
+    elif http_method == "POST":# 등록처리
+        #1. 요청파라미터(제목, 보기) 읽기.
+        question_text = request.POST.get('question_text')
+        # 같은이름으로 여러개 값이 넘어온 경우(choice_text=aaa&choice_text=bbb&)
+        ## request.GET/POST.getlist('요청파라미터이름'): list
+        choice_list = request.POST.getlist("choice_text")
+
+        #2. DB에 저장(insert)
+        q = Question(question_text=question_text)
+        q.save() # 문제 저장
+        for choice_text in choice_list: # 보기들 저장
+            choice = Choice(choice_text=choice_text, question=q)
+            choice.save()
+        
+        # 응답 페이지로 이동 - 목록페이지(list)
+        url = "/polls/list"
+        return redirect(url)
