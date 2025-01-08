@@ -1,8 +1,9 @@
 # polls/views.py
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from datetime import datetime
+from django.urls import reverse # url path설정의 name을 가지고 url을 만들어주는 함수.
 
+from datetime import datetime
 from polls.models import Question, Choice
 
 # welcome page
@@ -103,7 +104,9 @@ def vote(request):
         # )
 
         # 투표결과 페이지로 이동 -> view를 호출
-        url = f"/polls/vote_result/{question_id}"
+        # url = f"/polls/vote_result/{question_id}" # view의 url
+        url = reverse("polls:vote_result", args=[question_id])
+        print(url)
         return redirect(url)
         # redirect(url): Redirect 방식 응답. 
         # Web Browser가 지정한 url로  다시 요청하도록 응답. 
@@ -156,5 +159,6 @@ def vote_create(request):
             choice.save()
         
         # 응답 페이지로 이동 - 목록페이지(list)
-        url = "/polls/list"
-        return redirect(url)
+        # url = "/polls/list"
+        # return redirect(url)
+        return redirect(reverse("polls:list"))

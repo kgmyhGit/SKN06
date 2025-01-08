@@ -18,10 +18,18 @@ Including another URLconf
 ## python interpretor => django가상환경 선택.
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('polls/', include("polls.urls")),
+    path('', TemplateView.as_view(template_name="home.html"), name="home"), # http:/127.0.0.1:8000/   
 ]
 
-# http://ip;8000/polls/list
+# http://ip:8000   /polls/list
+
+# TemplateView
+##  요청을 받으면 단순히 template을 응답하는 View를 만들 경우 사용.
+##   - template 파일의 경로만 지정.
+# def home(request):
+#     return render(request, "home.html")

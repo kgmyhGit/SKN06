@@ -6,11 +6,12 @@ app_name = "polls"
 ## path("url", view함수, name="이 설정이름")
 urlpatterns = [
     path("welcome", views.welcome, name="welcome"),
-    path("list", views.list, name="list"),
+    path("vote_list", views.list, name="list"),
     path("vote_form/<int:question_id>", views.vote_form, name="vote_form"),
     path("vote", views.vote, name="vote"),
     path("vote_result/<int:question_id>", views.vote_result, name="vote_result"),
     path('vote_create', views.vote_create, name="vote_create"),
+    path('', views.list, name="polls_home"),  # http://127.0.0.1:8000/polls/
 ]
 # http://127.0.0.1:8000/polls/list
 
