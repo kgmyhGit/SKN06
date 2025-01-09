@@ -7,6 +7,7 @@ from django.forms import forms
 # - AbstractUser로 구현: 기본 User(username, password)에 필드들을 추가하는 방식
 # - AbstractUser 상속. 필드들 정의(username, password빼고 정의)
 class User(AbstractUser):
+    
     # Field들 정의 - table컬럼
     name = models.CharField(
         verbose_name="이름", # Form관련설정(label) - Form을 ModelForm을 만들 경우 form관련설정을 Model에 한다.

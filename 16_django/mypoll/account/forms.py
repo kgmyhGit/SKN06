@@ -26,3 +26,11 @@ class CustomUserCreationForm(UserCreationForm):
                 "name", "email", "birthday"] # form field로 구성할 것들들을 명시.
         # exclude = ["필드명"] # 지정한 필드명을 제외한 나머지 필드드로 form 필드 구성.
         # fields와 exclude는 같이 설정할 수 없다.
+        
+        # input type을 변경 -> Widget
+        ### {"field이름":Widget객체}
+        widgets = {
+            "birthday":forms.DateInput(attrs={"type":"date"}), #<input type='date'>
+            # "name":forms.PasswordInput()
+        }
+        
