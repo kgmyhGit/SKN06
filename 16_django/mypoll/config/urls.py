@@ -23,6 +23,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('polls/', include("polls.urls")),
+    path('account/', include('account.urls')),
     path('', TemplateView.as_view(template_name="home.html"), name="home"), # http:/127.0.0.1:8000/   
 ]
 
