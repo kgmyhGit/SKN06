@@ -130,3 +130,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # 사용자 정의 User 모델 등록
 ##############################
 AUTH_USER_MODEL = "account.User"  # AbstractUser 클래스 등록
+
+##################
+# 로그인 관련설정
+##################
+# 로그인 안한 사용자가 로그인해야 실행할 수있는 View를 호출 했을때 
+#                        이동할 url 설정.
+LOGIN_URL = '/account/login' 
+
+# 로그인/로그아웃 처리후에 이동할 url - Class기반 View를 사용할 때 필요
+LOGIN_REDIRECT = '/'
+LOGOUT_REDIRECT = '/'

@@ -34,3 +34,19 @@ class CustomUserCreationForm(UserCreationForm):
             # "name":forms.PasswordInput()
         }
         
+    # ModelForm에서 기본 검증을 처리
+    ## name: required
+    ## email: required, email형식 체크
+    ## birthday: 날짜 형식 체크
+    
+    # 사용자 정의 검증 (Form을 만들경우에는 Form에 작성. )
+    # - clean(), clean_검증필드명()
+    ## name은 두 글자 이상 입력
+    def clean_name(self):
+        # self.cleaned_data: dict - 기본 검증을 통과한 요청파라미터들.
+        name = self.cleaned_data['name']
+        if len(name) < 2 :
+            raise forms.ValidationError("이름은 2글자 이상 입력하세요.")
+        return name # 리턴해주는 값이 View가 사용하는 값.
+    
+        
