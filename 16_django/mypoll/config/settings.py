@@ -124,3 +124,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+##############################
+# 사용자 정의 User 모델 등록
+##############################
+AUTH_USER_MODEL = "account.User"  # AbstractUser 클래스 등록

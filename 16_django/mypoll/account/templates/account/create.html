@@ -1,0 +1,12 @@
+<!-- account/templates/account/create.html -->
+{% extends "layout.html" %}
+
+{% block title %}회원가입{% endblock title %}
+
+{% block contents %}
+<h1>회원가입</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+</form>
+{% endblock contents %}
