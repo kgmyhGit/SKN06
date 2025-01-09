@@ -3,6 +3,8 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
+
 # login()/logout(): 로그인/로그아웃 처리. 
 #                        - 로그인한 사용자정보를 session에 추가/제거
 # authenticate(): username(id)/password를 확인하는 함수.
@@ -89,6 +91,8 @@ def user_login(request):
             )
     
 # 로그아웃
+## Login안한 상태에서 요청을 받으면 settings.LOGIN_URL 로 이동.
+@login_required
 def user_logout(request):
     # login() 이 처리한 것들을 모두 무효화한다.
     logout(request)

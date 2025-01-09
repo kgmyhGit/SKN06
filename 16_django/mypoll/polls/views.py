@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse # url path설정의 name을 가지고 url을 만들어주는 함수.
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 from datetime import datetime
 from polls.models import Question, Choice
@@ -106,13 +107,6 @@ def list(request):
     )
 
 
-
-
-
-
-
-
-
 # 설문폼 페이지로 이동하는 View
 ## 설문 문항(문제)의 id(pk)를 받아서 설문폼을 응답.
 ## 문제 ID를 path parameter로 입력받는다.
@@ -199,6 +193,7 @@ def vote_result(request, question_id):
 # 응답 - GET: polls/vote_create.html
 #        POST: list view 를 호출 => redirect() 이동(새로고침 해도 추가 되지 않게.)
 ## HTTP 요청방식을 조회 - request.method: "POST", "GET"
+@login_required
 def vote_create(request):
     http_method = request.method
     if http_method == "GET": # 등록폼을 반환
