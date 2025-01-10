@@ -157,4 +157,16 @@ STATIC_ROOT = BASE_DIR / 'static_collection'
 # python manage.py collectstatic
 ## app/static, staticfiles_dirs 디렉토리들에 있는 static 파일들을
 ##     STATIC_ROOT 디렉토리 아래로 모아준다.
-## 
+
+# - 운영환경
+## http 서버 + wsgi(django실행환경) 나눠서 서버를 구축할 때
+## http 서버가 static 파일 요청을 처리. 
+##  static 파일들의 경로를 http서버에게 알려줘야 한다.
+##  static 파일들을 한 디렉토리(STATIC_ROOT)에 모은 뒤 그 디렉토리를 알려준다.
+# http서버: apache httpd, nginx
+
+##################
+# MEDIA 설정
+##################
+MEDIA_ROOT = BASE_DIR / "media" # 업로드 파일 저장 디렉토리
+MEDIA_URL = "/media/" # 업로드 파일 요청할 시작 url

@@ -19,7 +19,9 @@
 {% block contents %}
 <h1>회원가입</h1>
 <img src="/static/account/imgs/join.jpg" height="300">
-<form method="post" onsubmit='return check_name_length(this.name.value)'>
+<form method="post" 
+      enctype="multipart/form-data"
+      onsubmit='return check_name_length(this.name.value)'>
     {% csrf_token %}
     {% bootstrap_form form %} {#{form}#}
     <div class="mt-3">

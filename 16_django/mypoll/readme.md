@@ -54,3 +54,10 @@ cd  mypoll
 1. settings.STATICFILES_DIRS  경로
 2. APP/static 
     - app은 INSTALLED_APP에 등록된 순서대로 찾는다.
+
+# media
+- 파일 업로드 관련 설정.
+
+## settings.py
+MEDIA_URL: 업로드된 파일을 사용자가 요청할때 사용할 시작 PATH
+MEDIA_ROOT: 업로드된 파일들을 저장할 디렉토리 경로.(파일경로)

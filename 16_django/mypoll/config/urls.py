@@ -27,6 +27,13 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name="home.html"), name="home"), # http:/127.0.0.1:8000/   
 ]
 
+#### 파일업로드 관련 설정. MEDIA_ROOT의 url로 요청이 들을 받을 수 있도록 설정.
+# #(개발서버-runserver 에서 필요)
+from django.conf.urls.static import static
+from . import settings
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
 # http://ip:8000   /polls/list
 
 # TemplateView

@@ -20,6 +20,12 @@ class User(AbstractUser):
         null=True, # Null허용 (default: False - Not Null)
         blank=True # Form - 필수가 아니다.(default: False - required)
     )
+    profile_img = models.ImageField(
+        verbose_name="프로필 사진",
+        upload_to="images/%Y/%m/%d", # 저장경로 (media/지정한 경로)
+        null=True,
+        blank=True
+    ) #추가 -> python manage.py makemigrations, migrate
     
     
     def __str__(self):
