@@ -3,9 +3,12 @@ from dotenv import load_dotenv
 from config.settings import BASE_DIR
 
 
+# Web Application이 처음 실행될 때 아래 클래스가 정의 됨.
 class ApiConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'api'
+    # model = torch.load("모델 경로.")
+    #  ApiConfig.model
 
     def ready(self):
         """
