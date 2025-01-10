@@ -141,3 +141,20 @@ LOGIN_URL = '/account/login'
 # 로그인/로그아웃 처리후에 이동할 url - Class기반 View를 사용할 때 필요
 LOGIN_REDIRECT = '/'
 LOGOUT_REDIRECT = '/'
+
+#############################################################
+# static 파일 (html에서 사용할 image, js, css, ... 파일들) 설정
+#  1. app/static 아래 저장 -> static 파일들을 자동으로 장고서버가 인식
+#  2. 1이외 경로에 static 파일을 저장 -> setting.py에 설정.
+#############################################################
+# static파일을 client에서 요청할 때 사용할 url의 시작 path.
+# account/static/account/img/join.jpg
+# html: <img src="/static/account/img/join.jpg">
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static_files',]
+
+STATIC_ROOT = BASE_DIR / 'static_collection'
+# python manage.py collectstatic
+## app/static, staticfiles_dirs 디렉토리들에 있는 static 파일들을
+##     STATIC_ROOT 디렉토리 아래로 모아준다.
+## 

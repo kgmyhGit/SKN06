@@ -46,3 +46,11 @@ cd  mypoll
 # static 파일
 - join.jpg
    - account/static/account/imgs
+- survey.png
+   - Mypoll(root)/static_files/imgs
+
+## static 파일을 찾는 순서
+/static/a.jpg
+1. settings.STATICFILES_DIRS  경로
+2. APP/static 
+    - app은 INSTALLED_APP에 등록된 순서대로 찾는다.
