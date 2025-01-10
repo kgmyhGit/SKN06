@@ -49,4 +49,22 @@ class CustomUserCreationForm(UserCreationForm):
             raise forms.ValidationError("이름은 2글자 이상 입력하세요.")
         return name # 리턴해주는 값이 View가 사용하는 값.
     
+# 회원정보 수정 Form 정의 - UserChangeForm(username) 상속
+class CustomUserChangeForm(UserChangeForm):
+
+    password = None  # password변경 페이지 링크가 안나오도록 하기.
+
+    class Meta:
+        model = User
+        fields = ['name', 'email', 'birthday']
+        widgets = {
+            'birthday':forms.DateInput(attrs={'type':'date'})
+        }
+    # name Field 검증 메소드
+    def clean_name(self):
+        # self.cleaned_data: dict - 기본 검증을 통과한 요청파라미터들.
+        name = self.cleaned_data['name']
+        if len(name) < 2 :
+            raise forms.ValidationError("이름은 2글자 이상 입력하세요.")
+        return name # 리턴해주는 값이 View가 사용하는 값.
         

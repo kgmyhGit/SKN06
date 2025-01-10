@@ -2,17 +2,30 @@
 
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import (
+    login, # 로그인 처리 - 로그인사용자의 Model을 session에 저장(로그아웃할 때까지 정보유지.)
+    logout,# 로그아웃 처리 - session에서 로그인사용자 Model을 제거
+    authenticate, # 인증확인 - username, password DB에서 확인
+    update_session_auth_hash 
+    # 회원정보 수정에서 사용. 수정된 정보를 session의 User Model에 적용.
+
+)
 from django.contrib.auth.decorators import login_required
+
 
 # login()/logout(): 로그인/로그아웃 처리. 
 #                        - 로그인한 사용자정보를 session에 추가/제거
 # authenticate(): username(id)/password를 확인하는 함수.
 
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import (
+    AuthenticationForm, # 로그인폼
+    PasswordChangeForm  # 비밀번호 변경 폼
+)
+
+from .models import User
 ## 로그인 ModelForm (username, password 두개 필드정의-Model: User)
 
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 # account/views.py
 
@@ -81,6 +94,9 @@ def user_login(request):
         if user is not None: # 유효한 사용자
             # 로그인처리
             login(request, user)
+            if request.GET.get('next'):
+                return redirect(request.GET.get('next'))
+
             return redirect(reverse("home"))
         
         else: # 유효하지 않은 사용자.
@@ -97,3 +113,93 @@ def user_logout(request):
     # login() 이 처리한 것들을 모두 무효화한다.
     logout(request)
     return redirect(reverse('home'))
+
+
+# 로그인한 사용자 정보 조회
+# 요청 url: /account/detail
+# view: user_detail
+# 응답: account/detail.html
+@login_required
+def user_detail(request):
+    # View에서 로그인한 사용자 정보를 조회 -> request.user (모델)
+    user = User.objects.get(pk=request.user.pk)# 로그인 user의 pk
+    return render(request, "account/detail.html", {"object":user})
+
+# 패스워드 수정
+## 요청 URL: /account/password_change
+## view: password_change
+##  GET: 패스워드변경 폼을 응답. (응답: password_change.html)
+##  POST: 패스워드 변경 처리 (응답: /account/detail)
+@login_required
+def password_change(request):
+    http_method = request.method
+    if http_method == "GET":
+        #비밀번호 변경할 user정보를 넣어 빈폼을 생성 - 기존 패스워드 확인용.
+        form = PasswordChangeForm(request.user)
+        return render(request, "account/password_change.html", 
+                        {"form":form})
+    
+    elif http_method == "POST":
+        # 요청파라미터(패스워드들) 조회, 검증.
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid(): # 검증 통과
+            # db update
+            user = form.save() # ModelForm.save(): Update/Insert한 모델객체
+            # session에 저장된 user정보를 변경된 내용으로 변경. (안하면 logout)
+            update_session_auth_hash(request, user)# request, 변경된user모델
+            # 응답
+            return redirect(reverse("account:detail"))
+        else: # 검증 실패
+            return render(request, "account/password_change.html",
+                          {"form":form})
+        
+# 회원정보 수정 처리
+## 요청 url: /account/update
+## view: user_update
+##  GET - 수정 폼을 응답 (account/update.html)
+##  POST - 수정 처리   (회원정보 조회로 이동: account:detail)
+@login_required
+def user_update(request):
+    http_method = request.method
+    if http_method == "GET":
+        # CustomUserChangeForm을 이용해 빈폼을 생성 
+        #      - 로그인한 User객체를 넣어 생성. 입력 필드에 기존 데이터가 나와야함.
+        form = CustomUserChangeForm(instance=request.user)
+        return render(request, "account/update.html", {"form":form})
+
+    elif http_method == "POST":
+        # 요청파라미터 조회 +  검증 : Form
+        form = CustomUserChangeForm(
+            request.POST, request.FILES, instance=request.user
+        )
+        if form.is_valid(): #검증 성공
+            # DB에 update
+            user = form.save()
+            # session에 로그인 사용자정보를 갱신
+            update_session_auth_hash(request, user)
+            # 상세페이지로 이동
+            return redirect(reverse("account:detail"))
+        else: #검증실패 - update.html
+            return render(
+                request, "account/update.html", {"form":form}
+            )
+        
+# 탈퇴
+## 요청파라미터: /account/delete
+## view: user_delete
+## 응답: home 이동.
+@login_required
+def user_delete(request):
+    # DB에서 로그인한 user를 삭제
+    # user = request.user  # model
+    request.user.delete()
+        # 일반 데이터일 경우.
+        # 삭제할 데이터의 pk를 path/요청 parameter로 받아서 조회
+        # 조회한 Model을 이용해서 삭제.
+        # Question삭제 
+        # q = Question.objects.get(pk=pk)
+        # q.delete()
+    # 삭제후 로그아웃
+    logout(request)
+    return redirect(reverse('home'))
+
