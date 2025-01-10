@@ -41,3 +41,8 @@ cd  mypoll
         - DB에 테이블을 생성/수정 한다.
    - python manage.py runserver
       - http://127.0.0.1:8000/admin
+
+
+# static 파일
+- join.jpg
+   - account/static/account/imgs
