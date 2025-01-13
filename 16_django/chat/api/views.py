@@ -18,7 +18,7 @@ def chat_message(request, message):
     
     # llm에게 메세지 전송
     response = chat.send_message(message, history)
-
+    
     # history에 message, response을 저장. (max_length가 넘으면 오래된 순으로 메세지 삭제)
     add_message_to_history(history, ("human", message))
     add_message_to_history(history, ("ai", response))

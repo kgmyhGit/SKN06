@@ -61,7 +61,7 @@
         }
 
         .chat-input input {
-            flex: 1; /* 플랙스 컨터이너의 남은 공간을 다 차짛한다.*/
+            flex: 1; /* 플랙스 컨터이너의 남은 공간을 다 차지한다.*/
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 20px;
@@ -71,7 +71,7 @@
             padding: 10px 20px;
             border: none;
             border-radius: 20px;
-            background-color: #007bff;
+            background-color: #1e8289;
             color: white;
             cursor: pointer;            
         }
@@ -82,7 +82,7 @@
     <header>
         <h1>채팅</h1>
     </header>
-    <!-- 채팅 창창 -->
+    <!-- 채팅 창 -->
     <div class="chat-container"></div>
 
     <!-- 메세지 입력 필드드 -->
@@ -94,40 +94,55 @@
     <script type="text/javascript">
         
         function sendMessage() {
+            // 채팅 메세지 input field에서 value를 조회.
             let message = document.getElementById('chat_input').value;
             if (!message) {
                 alert('메시지를 입력하세요.');
                 return;
             }
-
+            // Javascript에서 HTTP 요청 처리 기능을 제공하는 클래스.
+            // 1. XMLHttpRequest객체 생성
             let xhr = new XMLHttpRequest();
+            // 2. XMLHttpRequest객체에 요청 URL 을 설정.
             xhr.open('GET', '/api/chat_message/'+message, true);
-
+            // 3. Callback 함수
             xhr.onload = function() {
+                // 응답이 오고 응답 코드가 200이면.
                 if (xhr.status === 200) {
+                    // xhr.responseText: 응답 받은 text
+                    // JSON.parse(json문자열): JSON을 JS 객체로 변환.
+                    // "{response:'안녕하세요'}" -> {response:"안녕하세요."}
                     let data = JSON.parse(xhr.responseText);
-                    let chatContainer = document.querySelector('.chat-container');
-                    let userMessage = document.createElement('div');
-                    userMessage.className = 'message right';
-                    userMessage.innerText = message;
-                    chatContainer.appendChild(userMessage);
 
+                    // 사용자 메세지와 응답 메세지를 채팅창에 추가.
+                    // 사용자 메세지 추가가
+                    let chatContainer = document.querySelector('.chat-container');
+                    let userMessage = document.createElement('div'); //<div></div>
+                    userMessage.className = 'message right';//<div class="message right"></div>
+                    userMessage.innerText = message;//<div class="message right">안녕</div>
+                    chatContainer.appendChild(userMessage);//채팅창에 추가.
+                    
+                    // LLM 응답을 채팅창에 추가.
                     let aiMessage = document.createElement('div');
                     aiMessage.className = 'message left';
-                    aiMessage.innerText = data.response;
+                    aiMessage.innerText = data.response; //LLM 응답 조회
                     chatContainer.appendChild(aiMessage);
 
                     document.getElementById('chat_input').value = '';
+                    document.getElementById('chat_input').focus();
                 } else {
                     alert(`Error code: ${xhr.status}, Error Msg: ${xhr.statusText}`);
                 }
             };
-            
+            // 서버로 요청.
+            // xhr.open()설정에 맞춰 요청
+            // 응답이 오면 xhr.onload 의 callback 이 호출 되서 응답 데이터 처리.
             xhr.send();
         }
 
         document.getElementById('send_btn').addEventListener('click', sendMessage);
         document.getElementById('chat_input').addEventListener('keydown', function(event) {
+            // 눌린 key가 enter일때.
             if (event.key === 'Enter') {
                 sendMessage();
             }
