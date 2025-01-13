@@ -1,0 +1,11 @@
+EC instance 생성
+- name:  mypoll-server
+- AMI : Ubuntu
+- keypair 생성
+- 보안그룹 생성
+   - port: 22(default), 80(http), 8000 (유형: 사용자 지정 TCP - 포트 직접입력)
+- update & upgrade
+- minicoda 설치
+
+MobaXterm 연결 설정 - 연결
+(02, 05, 06 노트북 파일 확인)
