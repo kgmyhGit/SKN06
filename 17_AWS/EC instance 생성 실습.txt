@@ -3,9 +3,97 @@ EC instance 생성
 - AMI : Ubuntu
 - keypair 생성
 - 보안그룹 생성
-   - port: 22(default), 80(http), 8000 (유형: 사용자 지정 TCP - 포트 직접입력)
-- update & upgrade
+   - port: 22(default), 80(http),`유형: 사용자 지정 TCP - 포트 직접입력)
+- sudo apt update //업데이트 확인
+- sudo apt upgrade// 업데이트 실행
+- sudo apt update & sudo apt upgrade
+
 - minicoda 설치
 
 MobaXterm 연결 설정 - 연결
 (02, 05, 06 노트북 파일 확인)
+
+-rwxrw-r-- 
+
+~ : 사용자 home directory
+/home/계정
+
+'argon2:$argon2id$v=19$m=10240,t=10,p=8$QSTgetlFsBB4Ecr5f8Z7Pw$6LJAm0pTzF5PuQOj5TO8Tmz9rj7OwmYGlBNkfgPMu1s'
+
+
+
+
+c.NotebookApp.ip = '172.31.36.165'
+c.NotebookApp.open_browser = False
+c.NotebookApp.password = 'argon2:$argon2id$v=19$m=10240,t=10,p=8$QSTgetlFsBB4Ecr5f8Z7Pw$6LJAm0pTzF5PuQOj5TO8Tmz9rj7OwmYGlBNkfgPMu1s'
+
+control  + s : 저장
+control + x : 종료
+
+- 현재 실행중인 process(program)을 확인
+ps
+PID - 프로세스 ID
+
+- 실행중인 process를 종료
+kill  PID
+
+# working directory
+
+cd ~    # 사용자 home 디렉토리로 이동.
+mkdir  workspace  # 디렉토리 생성
+cd  workspace
+
+54.180.142.45:8888/
+
+C:\temp\keypairs
+
+
+
+mkdir workspace
+cd workspace
+
+
+pip install streamlit  langchain  langchain_community  langchain_openai  python-dotenv
+
+
+
+pip uninstall dotenv-python
+pip uninstall python-dotenv
+
+pip install python-dotenv
+
+streamlit run 05_streamlit_chat_exam_memory.py  --server.port=8000
+
+54.180.241.18:8501
+
+
+
+
+mypoll -> 적당한 위치로 카피
+
+github에 mypoll 저장소
+
+cd workspace
+git clone https://github.com/kgmyhGit/mypoll.git
+
+ls -al
+cd mypoll
+
+
+가상환경
+conda deactivate
+conda create -n django python=3.12
+conda activate django
+
+pip  install  -r  requirements.txt
+
+python  manage.py  runserver 0.0.0.0:8000
+
+54.180.241.18:8000  
+
+
+
+
+
+
+
