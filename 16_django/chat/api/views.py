@@ -30,3 +30,14 @@ def chat_message(request, message):
     ## dict를 JSON 응답으로 만들어서 응답.
     return JsonResponse({'response': response})
 
+from django.http import StreamingHttpResponse
+from langchain_openai import ChatOpenAI
+@require_GET
+def chat_message_streaming(request, message):
+    model = ChatOpenAI(model="gpt-4o-mini")
+    def stream():
+        for chunk in model.stream(message):
+            print(type(chunk), chunk)
+            yield f'data:{{"res":"{chunk.content}"}}\n\n'
+
+    return StreamingHttpResponse(stream(), content_type="text/event-stream")

@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "account",
     "django_bootstrap5",
 ]
-
+    
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "config.middleware.NoCacheMiddleware",  # logout back시 처리를 위한 cache 처리
 ]
 
 ROOT_URLCONF = 'config.urls'

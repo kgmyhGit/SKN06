@@ -108,6 +108,7 @@ def user_login(request):
     
 # 로그아웃
 ## Login안한 상태에서 요청을 받으면 settings.LOGIN_URL 로 이동.
+from django.views.decorators.cache import never_cache
 @login_required
 def user_logout(request):
     # login() 이 처리한 것들을 모두 무효화한다.

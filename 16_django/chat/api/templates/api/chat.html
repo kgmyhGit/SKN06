@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LLM Streaming with Django & LangChain</title>
+</head>
+<body>
+  <input id="prompt-input" type="text" placeholder="Enter your prompt"/>
+  <button onclick="startStream()">Generate</button>
+  <div id="output"></div>
+<!-- fetch 사용할 수도 있는 것 같다. -->
+  <script>
+    function startStream() {
+      const prompt = document.getElementById('prompt-input').value;
+      const eventSource = new EventSource(`/api/stream/${encodeURIComponent(prompt)}/`);
+      const outputDiv = document.getElementById('output');
+
+      eventSource.onmessage = function(event) {
+        console.log(event.data);
+        output.innerHTML += JSON.parse(event.data)['res'];  // data: {res: aaa} ==> event의 data 속성으로 {res: aaa} 가 들어감.
+      };
+
+      eventSource.onerror = (error) => {
+        console.error("An error occurred:", error);
+        eventSource.close();
+      };
+    }
+  </script>
